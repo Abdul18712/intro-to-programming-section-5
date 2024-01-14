@@ -5,7 +5,7 @@ const messages = document.getElementsByClassName('message');
 const tooHighMessage = document.getElementById('too-high');
 const tooLowMessage = document.getElementById('too-low');
 const maxGuessesMessage = document.getElementById('max-guesses');
-const numberOfGuessesMessage = document.getElementById('num-of-guesses');
+const numberOfGuessesMessage = document.getElementById('number-of-guesses');
 const correctMessage = document.getElementById('correct');
 
 let targetNumber;
@@ -26,8 +26,9 @@ function checkGuess() {
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
   if (guess < 1 || guess > 99) {
-    return "guess should be between 1 and 99";
+    alert("guess should be between 1 and 99");
   }
+
   attempts = attempts + 1;
 
   hideAllMessages();
@@ -52,7 +53,7 @@ function checkGuess() {
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining`;
+    numberOfGuessesMessage.innerHTML = `You guessed ${guess} . <br> You have ${remainingAttempts} ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining`;
   }
 
   if (attempts === maxNumberOfAttempts) {
