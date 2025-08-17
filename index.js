@@ -9,7 +9,7 @@ const numberOfGuessesMessage = document.getElementById('number-of-guesses');
 const correctMessage = document.getElementById('correct');
 
 let targetNumber;
-const attempts = 0;
+let attempts; // should be let so we can increment
 const maxNumberOfAttempts = 5;
 
 // Returns a random number from min (inclusive) to max (exclusive)
@@ -25,7 +25,17 @@ function getRandomNumber(min, max) {
 function checkGuess() {
   // Get value from guess input element
   const guess = parseInt(guessInput.value, 10);
-  attempts = attempts + 1;
+
+  // Validate input range
+  if (isNaN(guess) || guess < 1 || guess > 99) {
+    hideAllMessages();
+    numberOfGuessesMessage.style.display = '';
+    numberOfGuessesMessage.innerHTML = 'Please enter a number between 1 and 99.';
+    guessInput.value = '';
+    return;
+  }
+
+  attempts++;
 
   hideAllMessages();
 
@@ -49,13 +59,14 @@ function checkGuess() {
     const remainingAttempts = maxNumberOfAttempts - attempts;
 
     numberOfGuessesMessage.style.display = '';
-    numberOfGuessesMessage.innerHTML = `You guessed ${guess}. <br> ${remainingAttempts} guesses remaining`;
+    numberOfGuessesMessage.innerHTML =
+      `You guessed ${guess}. <br> ${remainingAttempts} ${remainingAttempts === 1 ? 'guess' : 'guesses'} remaining`;
   }
 
-  if (attempts ==== maxNumberOfAttempts) {
+  if (attempts === maxNumberOfAttempts && guess !== targetNumber) {
+    maxGuessesMessage.style.display = '';
     submitButton.disabled = true;
     guessInput.disabled = true;
-    maxGuessesMessage.style.display = '';
   }
 
   guessInput.value = '';
