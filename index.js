@@ -7,6 +7,7 @@ const tooLowMessage = document.getElementById('too-low');
 const maxGuessesMessage = document.getElementById('max-guesses');
 const numberOfGuessesMessage = document.getElementById('number-of-guesses');
 const correctMessage = document.getElementById('correct');
+const revealMessage = document.getElementById('reveal'); // NEW
 
 let targetNumber;
 let attempts; // should be let so we can increment
@@ -45,6 +46,12 @@ function checkGuess() {
 
     correctMessage.style.display = '';
 
+    // Reveal the correct number on win
+    if (revealMessage) {
+      revealMessage.style.display = '';
+      revealMessage.innerHTML = `The number was <strong>${targetNumber}</strong>. 🎉`;
+    }
+
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
@@ -65,6 +72,13 @@ function checkGuess() {
 
   if (attempts === maxNumberOfAttempts && guess !== targetNumber) {
     maxGuessesMessage.style.display = '';
+
+    // Reveal the correct number on loss
+    if (revealMessage) {
+      revealMessage.style.display = '';
+      revealMessage.innerHTML = `The correct number was <strong>${targetNumber}</strong>.`;
+    }
+
     submitButton.disabled = true;
     guessInput.disabled = true;
   }
